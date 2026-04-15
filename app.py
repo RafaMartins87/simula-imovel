@@ -5,6 +5,7 @@ import streamlit as st
 import pandas as pd
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
+from reportlab.lib.enums import TA_CENTER
 import numpy_financial as npf
 
 st.set_page_config(page_title="Simulador Imobiliário", layout="wide")
