@@ -121,7 +121,7 @@ ax.plot(df["ano"], df["patrimonio_aluguel"], label="Alugar + investir", linewidt
 
 ax.yaxis.set_major_formatter(mticker.FuncFormatter(lambda x, _: f'R$ {int(x):,}'.replace(',', '.')))
 
-ax.set_title("Comparação de Patrimônio ao Longo do Tempo")
+ax.set_title("Comparação de Quanto dinheiro você vai ter no final")
 ax.set_xlabel("Ano")
 ax.set_ylabel("Patrimônio")
 ax.legend()
@@ -142,15 +142,15 @@ else:
 st.subheader("📄 Análise")
 
 st.write(f"""
-- Patrimônio comprando: R$ {final_compra:,.0f}
-- Patrimônio alugando: R$ {final_aluguel:,.0f}
+- Quanto dinheiro você vai ter no final se comprar: R$ {final_compra:,.0f}
+- Quanto dinheiro você vai ter no final se continuar alugando e investir a entrada: R$ {final_aluguel:,.0f}
 
 Este cenário considera:
 - valorização de {valorizacao}%
 - rendimento de {rendimento}%
 
 Resultado:
-{'Comprar é mais vantajoso' if final_compra > final_aluguel else 'Investir é mais vantajoso'}
+{'Comprar é mais vantajoso' if final_compra > final_aluguel else 'Continuar alugando e investir a entrada é mais vantajoso'}
 """)    
 
 ################################## PDF
