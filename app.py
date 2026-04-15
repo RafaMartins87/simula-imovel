@@ -108,7 +108,7 @@ st.caption("Parcela diminui ao longo do tempo (modelo aproximado SAC)")
 if final_compra > final_aluguel:
     resultado = "🏠 Comprar é melhor"
 else:
-    resultado = "💰 Alugar + investir é melhor"
+    resultado = "💰 Alugar e investir a entrada é melhor"
 
 ######################### GRAFICO
 st.divider()
