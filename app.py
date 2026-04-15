@@ -158,7 +158,12 @@ Resultado:
 
 def gerar_pdf(resultado, diferenca, compra, aluguel, reajuste, rendimento):
     buffer = BytesIO()
-    doc = SimpleDocTemplate(buffer)
+    doc = SimpleDocTemplate(
+        buffer,
+        title="Simulação Imobiliária",
+        author="Simulador Imobiliário",
+        subject="Comparação entre comprar imóvel e alugar investindo a entrada"
+        )
     styles = getSampleStyleSheet()
     
     centered_style = ParagraphStyle(
