@@ -5,6 +5,7 @@ import streamlit as st
 import pandas as pd
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image
 from reportlab.lib.styles import getSampleStyleSheet
+import numpy_financial as npf
 
 st.set_page_config(page_title="Simulador Imobiliário", layout="wide")
 
@@ -17,7 +18,7 @@ with col1:
     valor_imovel = st.number_input("Valor do imóvel", value=300000)
     entrada = st.number_input("Entrada financiamento", value=40000)
     valorizacao = st.number_input("Valorização anual do imovel (%)", value=3.0)
-    juros_financiamento = st.number_input("Juros do financiamento (%)", value=10.0)
+    juros_financiamento = st.number_input("Juros do financiamento (% ao ano)", value=10.0)
 
 with col2:
     st.subheader("🏢 Aluguel")
@@ -29,8 +30,12 @@ with col3:
     rendimento = st.number_input("Rendimento investimento(%)", value=10.0)
     capacidade = st.number_input("Capacidade financeira mensal para imovel", value=3000)
     prazo = st.number_input("Prazo do financiamento (anos)", value=30)
-    parcela_estimada = (valor_imovel - entrada) / (prazo * 12) + ((valor_imovel - entrada)*(1+juros_financiamento)**1/12) - (valor_imovel - entrada)
 
+juros_mensal = juros_financiamento / 100 / 12
+n = prazo * 12
+pv = valor_imovel - entrada
+
+parcela_estimada = abs(npf.pmt(juros_mensal, n, -pv))
 
 ################## MOTOR
 
