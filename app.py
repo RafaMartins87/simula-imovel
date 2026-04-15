@@ -4,7 +4,7 @@ import matplotlib.ticker as mticker
 import streamlit as st
 import pandas as pd
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image
-from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 import numpy_financial as npf
 
 st.set_page_config(page_title="Simulador Imobiliário", layout="wide")
@@ -159,6 +159,14 @@ def gerar_pdf(resultado, diferenca, compra, aluguel):
     buffer = BytesIO()
     doc = SimpleDocTemplate(buffer)
     styles = getSampleStyleSheet()
+    
+    centered_style = ParagraphStyle(
+        name="CenteredHeading",
+        parent=styles["Heading2"],
+        alignment=TA_CENTER,
+        spaceBefore=20,
+        spaceAfter=20
+    )
 
     elementos = []
 
@@ -166,7 +174,7 @@ def gerar_pdf(resultado, diferenca, compra, aluguel):
     elementos.append(Spacer(1, 12))
 
     elementos.append(Paragraph("Resultado da Simulação", styles["Title"]))
-    elementos.append(Paragraph(f"<b>{resultado}</b>", styles["Heading2"]))
+    elementos.append(Paragraph(f"<b>{resultado}</b>", centered_style))
     elementos.append(Spacer(1, 12))
 
     elementos.append(Paragraph(f"Diferença: R$ {diferenca:,.0f}", styles["Normal"]))
