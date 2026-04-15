@@ -29,7 +29,7 @@ with col3:
     rendimento = st.number_input("Rendimento investimento(%)", value=10.0)
     capacidade = st.number_input("Capacidade financeira mensal para imovel", value=3000)
     prazo = st.number_input("Prazo do financiamento (anos)", value=30)
-    parcela_estimada = (valor_imovel - entrada) / (prazo * 12) + ((valor_imovel - entrada)*(1+juros_financiamento)^1/12) - (valor_imovel - entrada)
+    parcela_estimada = (valor_imovel - entrada) / (prazo * 12) + ((valor_imovel - entrada)*(1+juros_financiamento)**1/12) - (valor_imovel - entrada)
 
 
 ################## MOTOR
