@@ -20,19 +20,23 @@ with col1:
     valorizacao = st.number_input("Valorização anual do imovel (%)", value=3.0)
     juros_financiamento = st.number_input("Juros do financiamento (% ao ano)", value=10.0)
 
+juros_anual = juros_financiamento/100
+
 with col2:
     st.subheader("🏢 Aluguel")
     aluguel = st.number_input("Aluguel mensal", value=2000)
     reajuste = st.number_input("Reajuste anual do aluguel (%)", value=3.0)
 
+aluguel_atual = aluguel * 12
+
 with col3:
     st.subheader("💰 Financeiro")
     rendimento = st.number_input("Rendimento investimento(%)", value=10.0)
     capacidade = st.number_input("Capacidade financeira mensal para imovel", value=3000)
-    prazo = st.number_input("Prazo do financiamento (anos)", value=30)
+    prazo_financiamento = st.number_input("Prazo do financiamento (anos)", value=30)
 
 juros_mensal = juros_financiamento / 100 / 12
-n = prazo * 12
+n = prazo_financiamento * 12
 pv = valor_imovel - entrada
 
 parcela_estimada = abs(npf.pmt(juros_mensal, n, -pv))
@@ -40,7 +44,7 @@ parcela_estimada = abs(npf.pmt(juros_mensal, n, -pv))
 ################## MOTOR
 
 
-anos = list(range(0, prazo + 1))
+anos = list(range(0, prazo_financiamento + 1))
 
 valor = valor_imovel
 saldo = valor_imovel - entrada
@@ -48,8 +52,8 @@ saldo = valor_imovel - entrada
 dados = []
 
 invest_aluguel = entrada
-amortizacao_anual = (valor_imovel - entrada) / prazo
-aporte_aluguel = max(capacidade - aluguel, 0) * 12
+amortizacao_anual = (valor_imovel - entrada) / prazo_financiamento
+
 invest_aluguel = entrada
 
 for ano in anos:
@@ -62,10 +66,27 @@ for ano in anos:
     })
 
     # atualizações
-    valor *= (1 + valorizacao/100)
+
+    # --- COMPRA ---
+    juros_ano = saldo * juros_anual
+    parcela_ano = juros_ano + amortizacao_anual
+
     saldo -= amortizacao_anual
     saldo = max(saldo, 0)
+
+    # --- ALUGUEL ---
+    aluguel_ano = aluguel_atual
+
+    # --- APORTES DINÂMICOS ---
+    aporte_compra = max((capacidade * 12) - parcela_ano, 0)
+    aporte_aluguel = max((capacidade * 12) - aluguel_ano, 0)
+
+    # --- INVESTIMENTOS ---
     invest_aluguel = (invest_aluguel + aporte_aluguel) * (1 + rendimento/100)
+
+    # --- ATUALIZAÇÕES ---
+    valor *= (1 + valorizacao/100)
+    aluguel_atual *= (1 + reajuste/100)
 
 df = pd.DataFrame(dados)
 
@@ -81,6 +102,7 @@ colB.metric("Patrimônio Aluguel", f"R$ {final_aluguel:,.0f}")
 colC.metric("Diferença", f"R$ {diferenca:,.0f}")
 
 st.info(f"💸 Parcela estimada do financiamento: R$ {parcela_estimada:,.0f}/mês")
+st.caption("Parcela diminui ao longo do tempo (modelo aproximado SAC)")
 
 if final_compra > final_aluguel:
     resultado = "🏠 Comprar é melhor"
