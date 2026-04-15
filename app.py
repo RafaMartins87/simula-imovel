@@ -165,8 +165,8 @@ def gerar_pdf(resultado, diferenca, compra, aluguel):
     elementos.append(Paragraph("Simulação: Comprar vs Alugar", styles["Title"]))
     elementos.append(Spacer(1, 12))
 
-    elementos.append(Paragraph("Resultado da Simulação", styles["Heading2"]))
-    elementos.append(Paragraph(f"<b>{resultado}</b>", styles["Title"]))
+    elementos.append(Paragraph("Resultado da Simulação", styles["Title"]))
+    elementos.append(Paragraph(f"<b>{resultado}</b>", styles["Heading2"]))
     elementos.append(Spacer(1, 12))
 
     elementos.append(Paragraph(f"Diferença: R$ {diferenca:,.0f}", styles["Normal"]))
