@@ -28,6 +28,7 @@ with col3:
     rendimento = st.number_input("Rendimento investimento(%)", value=10.0)
     capacidade = st.number_input("Capacidade financeira mensal para imovel", value=3000)
     prazo = st.number_input("Prazo do financiamento (anos)", value=30)
+    parcela_estimada = (valor_imovel - entrada) / (prazo * 12)
 
 
 ################## MOTOR
@@ -41,11 +42,12 @@ saldo = valor_imovel - entrada
 dados = []
 
 invest_aluguel = entrada
-
+amortizacao_anual = (valor_imovel - entrada) / prazo
 aporte_aluguel = max(capacidade - aluguel, 0) * 12
+invest_aluguel = entrada
 
 for ano in anos:
-    patrimonio_compra = valor - saldo
+    patrimonio_compra = max(valor - saldo, 0)
 
     dados.append({
         "ano": ano,
@@ -55,7 +57,8 @@ for ano in anos:
 
     # atualizações
     valor *= (1 + valorizacao/100)
-    saldo -= (saldo / prazo)
+    saldo -= amortizacao_anual
+    saldo = max(saldo, 0)
     invest_aluguel = (invest_aluguel + aporte_aluguel) * (1 + rendimento/100)
 
 df = pd.DataFrame(dados)
@@ -71,6 +74,8 @@ colA.metric("Patrimônio Compra", f"R$ {final_compra:,.0f}")
 colB.metric("Patrimônio Aluguel", f"R$ {final_aluguel:,.0f}")
 colC.metric("Diferença", f"R$ {diferenca:,.0f}")
 
+st.info(f"💸 Parcela estimada do financiamento: R$ {parcela_estimada:,.0f}/mês")
+
 if final_compra > final_aluguel:
     resultado = "🏠 Comprar é melhor"
 else:
@@ -82,9 +87,11 @@ st.subheader("📊 Evolução do patrimônio")
 
 fig, ax = plt.subplots(figsize=(8, 4))
 
-ax.plot(df["ano"], df["patrimonio_compra"], label="Comprar")
-ax.plot(df["ano"], df["patrimonio_aluguel"], label="Alugar + investir")
+ax.plot(df["ano"], df["patrimonio_compra"], label="Comprar", linewidth=2)
+ax.plot(df["ano"], df["patrimonio_aluguel"], label="Alugar + investir", linewidth=2)
+
 ax.yaxis.set_major_formatter(mticker.FuncFormatter(lambda x, _: f'R$ {int(x):,}'.replace(',', '.')))
+
 ax.set_title("Comparação de Patrimônio ao Longo do Tempo")
 ax.set_xlabel("Ano")
 ax.set_ylabel("Patrimônio")
@@ -95,9 +102,6 @@ st.pyplot(fig)
 #fig.savefig("grafico.png")
 
 ########################### INSIGHTS
-
-final_compra = df["patrimonio_compra"].iloc[-1]
-final_aluguel = df["patrimonio_aluguel"].iloc[-1]
 
 if final_compra > final_aluguel:
     st.success(f"🏠 Comprar é melhor (+R$ {final_compra - final_aluguel:,.0f})")
@@ -171,6 +175,6 @@ if st.button("📄 Gerar relatório"):
     st.download_button(
         label="Download PDF",
         data=pdf,
-        file_name="relatorio.pdf",
+        file_name="simulacao-imobiliaria.pdf",
         mime="application/pdf"
     )
