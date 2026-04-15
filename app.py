@@ -197,6 +197,17 @@ st.subheader("📊 Resultado")
 st.write(resultado)
 st.write(f"Diferença: R$ {diferenca:,.0f}")
 
+st.write(f"""
+📌 Por que esse resultado?
+
+- O custo do financiamento começa alto e reduz ao longo do tempo
+- O aluguel cresce com inflação ({reajuste}% ao ano)
+- O valor investido cresce a {rendimento}% ao ano
+- A diferença mensal entre os cenários foi reinvestida
+
+👉 Isso fez o cenário de {'compra' if final_compra > final_aluguel else 'aluguel + investimento'} acumular mais patrimônio.
+""")
+
 if st.button("📄 Gerar relatório"):
     pdf = gerar_pdf(resultado, diferenca, final_compra, final_aluguel)
 
