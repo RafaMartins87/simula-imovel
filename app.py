@@ -156,7 +156,7 @@ Resultado:
 ################################## PDF
 
 
-def gerar_pdf(resultado, diferenca, compra, aluguel):
+def gerar_pdf(resultado, diferenca, compra, aluguel, reajuste, rendimento):
     buffer = BytesIO()
     doc = SimpleDocTemplate(buffer)
     styles = getSampleStyleSheet()
@@ -196,6 +196,12 @@ def gerar_pdf(resultado, diferenca, compra, aluguel):
     elementos.append(Paragraph(f"Comprar: R$ {compra:,.0f}", styles["Normal"]))
     elementos.append(Paragraph(f"Alugar: R$ {aluguel:,.0f}", styles["Normal"]))
 
+    elementos.append(Paragraph(f"O custo do financiamento começa alto e reduz ao longo do tempo", styles["Normal"]))
+    elementos.append(Paragraph(f"O aluguel cresce com inflação ({reajuste}% ao ano)", styles["Normal"]))
+    elementos.append(Paragraph(f"O valor investido cresce a {rendimento}% ao ano", styles["Normal"]))
+    elementos.append(Paragraph(f"A diferença mensal entre os cenários foi reinvestida", styles["Normal"]))
+
+
     doc.build(elementos)
 
     buffer.seek(0)
@@ -218,7 +224,7 @@ st.write(f"""
 """)
 
 if st.button("📄 Gerar relatório"):
-    pdf = gerar_pdf(resultado, diferenca, final_compra, final_aluguel)
+    pdf = gerar_pdf(resultado, diferenca, final_compra, final_aluguel, reajuste, rendimento)
 
     st.download_button(
         label="Download PDF",
