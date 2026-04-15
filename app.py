@@ -201,8 +201,8 @@ def gerar_pdf(resultado, diferenca, compra, aluguel, reajuste, rendimento):
     elementos.append(Paragraph(f"Comprar: R$ {compra:,.0f}", styles["Normal"]))
     elementos.append(Paragraph(f"Alugar: R$ {aluguel:,.0f}", styles["Normal"]))
 
-    elementos.append(Paragraph(f"<br></br>", styles["Normal"]))
-    elementos.append(Paragraph(f"<br></br>", styles["Normal"]))
+    elementos.append(Paragraph(f"<br> ' ' </br>", styles["Normal"]))
+    elementos.append(Paragraph(f"<br> ' ' </br>", styles["Normal"]))
 
 
     elementos.append(Paragraph(f"O custo do financiamento começa alto e reduz ao longo do tempo", styles["Normal"]))
