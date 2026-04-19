@@ -23,7 +23,7 @@ st.markdown("""
 
 st.set_page_config(page_title="Simulador Imobiliário", layout="wide")
 
-st.title("🏠 Simulador: Comprar Financiado vs Alugar investindo a entrada")
+st.title("🏠 Simulador: Comprar Financiado vs Alugar investindo")
 
 col1, col2, col3 = st.columns(3)
 
