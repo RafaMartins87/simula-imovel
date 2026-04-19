@@ -8,6 +8,18 @@ from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.lib.enums import TA_CENTER
 import numpy_financial as npf
 
+
+st.markdown("""
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FGZDTHETTL"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-FGZDTHETTL');
+</script>
+""", unsafe_allow_html=True)
+
 st.set_page_config(page_title="Simulador Imobiliário", layout="wide")
 
 st.title("🏠 Simulador: Comprar Financiado vs Alugar investindo a entrada")
