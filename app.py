@@ -13,10 +13,11 @@ st.markdown("""
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-FGZDTHETTL"></script>
 <script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-FGZDTHETTL');
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+            
+    gtag('config', 'G-FGZDTHETTL');
 </script>
 """, unsafe_allow_html=True)
 
@@ -154,12 +155,14 @@ else:
 st.subheader("📄 Análise")
 
 st.write(f"""
-- Quanto dinheiro você vai ter no final se comprar: R$ {final_compra:,.0f}
-- Quanto dinheiro você vai ter no final se continuar alugando e investir a entrada: R$ {final_aluguel:,.0f}
+- Seu patrimonio/imovel (estimativa) no final se comprar: R$ {final_compra:,.0f}
+- Seu investimentoi (estimativa) no final se continuar alugando com investimento da
+    entrada e aportando a diferença entre aluguel e parcela do financiamento 
+    se houver: R$ {final_aluguel:,.0f}
 
 Este cenário considera:
-- valorização de {valorizacao}%
-- rendimento de {rendimento}%
+- imovel com valorização anual: {valorizacao}%
+- rendimento do investimento: {rendimento}%
 
 Resultado:
 {'Comprar é mais vantajoso' if final_compra > final_aluguel else 'Continuar alugando e investir a entrada é mais vantajoso'}
