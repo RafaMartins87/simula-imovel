@@ -121,7 +121,7 @@ st.caption("Parcela diminui ao longo do tempo (modelo aproximado SAC)")
 if final_compra > final_aluguel:
     resultado = "🏠 Comprar é melhor"
 else:
-    resultado = "💰 Alugar e investir a entrada é melhor"
+    resultado = "💰 Alugar e investir a entrada é melhor" #rafa
 
 ######################### GRAFICO
 st.divider()
@@ -134,7 +134,7 @@ ax.plot(df["ano"], df["patrimonio_aluguel"], label="Alugar + investir", linewidt
 
 ax.yaxis.set_major_formatter(mticker.FuncFormatter(lambda x, _: f'R$ {int(x):,}'.replace(',', '.')))
 
-ax.set_title("Comparação de Quanto dinheiro você vai ter no final")
+ax.set_title("Patrimônio x tempo")
 ax.set_xlabel("Ano")
 ax.set_ylabel("Patrimônio")
 ax.legend()
@@ -148,7 +148,7 @@ st.pyplot(fig)
 if final_compra > final_aluguel:
     st.success(f"🏠 Comprar é melhor (+R$ {final_compra - final_aluguel:,.0f})")
 else:
-    st.warning(f"💰 Investir é melhor (+R$ {final_aluguel - final_compra:,.0f})")
+    st.info(f"💰 Investir é melhor (+R$ {final_aluguel - final_compra:,.0f})")
 
 ########################## RELATORIOS
 
@@ -164,9 +164,9 @@ Este cenário considera:
 - imovel com valorização anual: {valorizacao}%
 - rendimento do investimento: {rendimento}%
 
-Resultado:
-{'Comprar é mais vantajoso' if final_compra > final_aluguel else 'Continuar alugando e investir a entrada é mais vantajoso'}
-""")    
+# Resultado:
+# {'Comprar é mais vantajoso' if final_compra > final_aluguel else 'Continuar alugando e investir a entrada é mais vantajoso'}
+# """)    
 
 ################################## PDF
 
@@ -221,7 +221,7 @@ def gerar_pdf(resultado, diferenca, compra, aluguel, reajuste, rendimento):
 
 
     elementos.append(Paragraph(f"O custo do financiamento começa alto e reduz ao longo do tempo", styles["Normal"]))
-    elementos.append(Paragraph(f"O aluguel cresce com inflação ({reajuste}% ao ano)", styles["Normal"]))
+    elementos.append(Paragraph(f"O aluguel cresce por conta de reajuste ({reajuste}% ao ano)", styles["Normal"]))
     elementos.append(Paragraph(f"O valor investido cresce a {rendimento}% ao ano", styles["Normal"]))
     elementos.append(Paragraph(f"A diferença mensal entre os cenários foi reinvestida", styles["Normal"]))
 
