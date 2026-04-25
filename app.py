@@ -8,16 +8,6 @@ from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.lib.enums import TA_CENTER
 import numpy_financial as npf
 
-st.components.v1.html("""
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-FGZDTHETTL"></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-FGZDTHETTL');
-</script>
-""", height=0)
-
 st.set_page_config(page_title="Simulador Imobiliário", layout="wide")
 
 st.title("🏠 Simulador: Comprar Financiado vs Alugar investindo")
@@ -43,7 +33,7 @@ aluguel_atual = aluguel * 12
 with col3:
     st.subheader("💰 Financeiro")
     rendimento = st.number_input("Rendimento investimento(%)", value=10.0)
-    capacidade = st.number_input("Capacidade financeira mensal para imovel", value=3000)
+    capacidade = st.number_input("Valor máximo que você pode pagar por mês para alugar ou pagar financiamento", value=3000)
     prazo_financiamento = st.number_input("Prazo do financiamento (anos)", value=30)
 
 juros_mensal = juros_financiamento / 100 / 12
