@@ -15,17 +15,18 @@ st.title("🏠 Simulador: Comprar Financiado vs Alugar investindo")
 col1, col2, col3 = st.columns(3)
 
 with col1:
-    st.subheader("🏠 Compra")
-    valor_imovel = st.number_input("Valor do imóvel", value=300000)
-    entrada = st.number_input("Entrada financiamento", value=40000)
+    st.subheader("🏠 Compra 🤑️")
+    valor_imovel = st.number_input("Valor do imóvel (R$)", value=300000)
+    entrada = st.number_input("Entrada financiamento (R$)", value=40000)
     valorizacao = st.number_input("Valorização anual do imovel (%)", value=3.0)
-    juros_financiamento = st.number_input("Juros do financiamento (% ao ano)", value=10.0)
+    juros_financiamento = st.number_input("Juros anual do financiamento (%)", value=10.0)
 
 juros_anual = juros_financiamento/100
 
+
 with col2:
     st.subheader("🏢 Aluguel")
-    aluguel = st.number_input("Aluguel mensal", value=2000)
+    aluguel = st.number_input("Aluguel mensal (R$)", value=2000)
     reajuste = st.number_input("Reajuste anual do aluguel (%)", value=3.0)
 
 aluguel_atual = aluguel * 12
@@ -42,7 +43,7 @@ pv = valor_imovel - entrada
 
 parcela_estimada = abs(npf.pmt(juros_mensal, n, -pv))
 
-################## MOTOR
+################## MOTOR DE CALCULO
 
 
 anos = list(range(0, prazo_financiamento + 1))
@@ -96,9 +97,11 @@ final_aluguel = df["patrimonio_aluguel"].iloc[-1]
 
 diferenca = abs(final_compra - final_aluguel)
 
+#####################
+
 colA, colB, colC = st.columns(3)
 
-colA.metric("Patrimônio Compra", f"R$ {final_compra:,.0f}")
+colA.metric("Patrimônio Compra ", f"R$ {final_compra:,.0f}")
 colB.metric("Patrimônio Aluguel", f"R$ {final_aluguel:,.0f}")
 colC.metric("Diferença", f"R$ {diferenca:,.0f}")
 
@@ -108,7 +111,7 @@ st.caption("Parcela diminui ao longo do tempo (modelo aproximado SAC)")
 if final_compra > final_aluguel:
     resultado = "🏠 Comprar é melhor"
 else:
-    resultado = "💰 Alugar e investir a entrada é melhor" #rafa
+    resultado = "💰 Alugar é melhor" #rafa
 
 ######################### GRAFICO
 st.divider()
@@ -152,7 +155,7 @@ Este cenário considera:
 - rendimento do investimento: {rendimento}%
 
 # Resultado:
-# {'Comprar é mais vantajoso' if final_compra > final_aluguel else 'Continuar alugando e investir a entrada é mais vantajoso'}
+# {'Comprar é mais vantajoso' if final_compra > final_aluguel else 'Continuar alugando é mais vantajoso'}
 # """)    
 
 ################################## PDF
